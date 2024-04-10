@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-catalog',
+  selector: 'app-catalog-page',
   standalone: false,
-  templateUrl: './catalog.component.html',
-  styleUrl: './catalog.component.scss',
+  templateUrl: './catalog-page.component.html',
+  styleUrl: './catalog-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CatalogComponent {}
+export class CatalogPageComponent {}
