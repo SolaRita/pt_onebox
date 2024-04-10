@@ -11,6 +11,7 @@ import { CatalogPageComponent } from './pages/catalog-page/catalog-page.componen
 import { DetailPageComponent } from './pages/detail-page/detail-page.component';
 import { SessionItemComponent } from './components/session-item/session-item.component';
 import { ReservationsRoutingModule } from './reservations-routing.module';
+import { CartModule } from '../cart/cart.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,6 @@ import { ReservationsRoutingModule } from './reservations-routing.module';
     SessionItemComponent,
     SessionListComponent,
   ],
-  imports: [CommonModule, SharedModule, ReservationsRoutingModule],
+  imports: [CommonModule, SharedModule, ReservationsRoutingModule, CartModule],
 })
 export class ReservationsModule {}

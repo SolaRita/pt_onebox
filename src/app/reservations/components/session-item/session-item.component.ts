@@ -8,4 +8,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './session-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SessionItemComponent {}
+export class SessionItemComponent {
+  sumar() {
+    throw new Error('Method not implemented.');
+  }
+  restar() {
+    throw new Error('Method not implemented.');
+  }
+}

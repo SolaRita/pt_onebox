@@ -8,4 +8,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './event-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventItemComponent {}
+export class EventItemComponent {
+  deleteOne() {
+    throw new Error('Method not implemented.');
+  }
+}
