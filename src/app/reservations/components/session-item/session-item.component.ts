@@ -3,12 +3,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-session-item',
-  standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  standalone: false,
   templateUrl: './session-item.component.html',
   styleUrl: './session-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SessionItemComponent { }
+export class SessionItemComponent {}

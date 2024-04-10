@@ -3,12 +3,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-event-card',
-  standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  standalone: false,
   templateUrl: './event-card.component.html',
   styleUrl: './event-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventCardComponent { }
+export class EventCardComponent {}
