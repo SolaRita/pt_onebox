@@ -1,9 +1,7 @@
 <div class="border border-black rounded-lg p-4">
-  <ng-container>
-    <app-session-item></app-session-item>
-    <app-session-item></app-session-item>
-    <app-session-item></app-session-item>
-    <app-session-item></app-session-item>
-    <app-session-item></app-session-item>
-  </ng-container>
+  @for( session of eventDetail?.sessions; track session) {
+  <app-session-item [session]="session"></app-session-item>
+  } @empty {
+  <p>EVENT INFO NOT FOUND</p>
+  }
 </div>

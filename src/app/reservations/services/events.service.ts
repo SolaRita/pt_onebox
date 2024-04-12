@@ -27,7 +27,6 @@ export class EventsService {
     if (isNaN(eventId) || eventId <= 0) {
       throw new Error('Invalid eventId');
     }
-
     return this.http
       .get<RawEventDetailData>(`${this.eventInfoUrl}${eventId}.json`)
       .pipe(map((rawEventDetail) => mapToEventDetail(rawEventDetail)));

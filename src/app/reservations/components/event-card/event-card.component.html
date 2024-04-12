@@ -12,9 +12,10 @@
     class="text-black text-base mb-4"
     [innerHTML]="event.description | formatText"
   ></p>
-  <button
+  <a
     class="bg-blue text-white text-sm font-semibold py-2 px-4 flex items-center justify-center mt-auto"
+    [routerLink]="['/reservations/events', event.id]"
   >
-    Comprar
-  </button>
+    Comprar</a
+  >
 </div>

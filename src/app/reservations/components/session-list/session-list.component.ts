@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { EventDetail, EventInfo } from '../../interfaces/event-detail';
 
 @Component({
   selector: 'app-session-list',
@@ -8,4 +16,20 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './session-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SessionListComponent {}
+export class SessionListComponent {
+  @Input()
+  eventDetail: EventDetail | null | undefined;
+
+  @Output()
+  private readonly eventSelectedEmitter = new EventEmitter<Event>();
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['sessionList'] && changes['sessionList'].currentValue) {
+      this.eventDetail = changes['sessionList'].currentValue;
+    }
+  }
+
+  onEventSelected(event: Event) {
+    this.eventSelectedEmitter.emit(event);
+  }
+}
