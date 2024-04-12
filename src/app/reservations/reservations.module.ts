@@ -12,6 +12,7 @@ import { DetailPageComponent } from './pages/detail-page/detail-page.component';
 import { SessionItemComponent } from './components/session-item/session-item.component';
 import { ReservationsRoutingModule } from './reservations-routing.module';
 import { CartModule } from '../cart/cart.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,12 @@ import { CartModule } from '../cart/cart.module';
     SessionItemComponent,
     SessionListComponent,
   ],
-  imports: [CommonModule, SharedModule, ReservationsRoutingModule, CartModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ReservationsRoutingModule,
+    CartModule,
+    HttpClientModule,
+  ],
 })
 export class ReservationsModule {}

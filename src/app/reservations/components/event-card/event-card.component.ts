@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Event } from '../../interfaces/event';
 
 @Component({
   selector: 'app-event-card',
@@ -8,4 +9,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './event-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventCardComponent {}
+export class EventCardComponent {
+  @Input()
+  public event: any = {};
+}

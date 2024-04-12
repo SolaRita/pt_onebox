@@ -1,10 +1,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-  <ng-container>
-    <app-event-card></app-event-card>
-    <app-event-card></app-event-card>
-    <app-event-card></app-event-card>
-    <app-event-card></app-event-card>
-    <app-event-card></app-event-card>
-    <app-event-card></app-event-card>
+  <p class="text-black"></p>
+  <ng-container *ngFor="let event of eventList; index as i; trackBy: trackByFn">
+    {{ event.title }}
+    <!-- <app-event-card [event]="event"></app-event-card> -->
   </ng-container>
 </div>
