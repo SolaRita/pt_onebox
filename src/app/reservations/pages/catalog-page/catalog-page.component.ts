@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../../services/events.service';
-import { Observable, take } from 'rxjs';
 import { Event } from '../../interfaces/event';
+import { Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-catalog-page',
@@ -10,38 +9,17 @@ import { Event } from '../../interfaces/event';
   styleUrl: './catalog-page.component.scss',
 })
 export class CatalogPageComponent implements OnInit {
-  public eventList: Event[] = [];
+  eventList$ = new Observable<Event[] | null>();
   isLoading: boolean = true;
-  public prueba = 'hola';
 
   constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
     this.getAllEvents();
   }
+
   getAllEvents() {
-    this.isLoading = true;
-    this.eventsService
-      .getEvents()
-      .pipe(take(1))
-      .subscribe({
-        next: (res) => {
-          debugger;
-          this.eventList = res;
-          console.log('event', this.eventList);
-          console.log('res', res);
-          this.isLoading = false;
-        },
-
-        error: (e) => {
-          console.log(e);
-          console.error('Error fetching events:', e);
-          this.isLoading = false;
-        },
-
-        complete: () => {
-          console.log('Event fetch completed');
-        },
-      });
+    this.eventList$ = this.eventsService.getEvents().pipe(take(1));
+    this.isLoading = false;
   }
 }

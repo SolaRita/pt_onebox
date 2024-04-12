@@ -1,15 +1,16 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { EventsService } from '../../services/events.service';
 import { Event } from '../../interfaces/event';
-import { take } from 'rxjs';
+
 @Component({
   selector: 'app-event-list',
   standalone: false,
@@ -17,24 +18,21 @@ import { take } from 'rxjs';
   styleUrl: './event-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventListComponent {
-  @Input() eventList: Event[] = [];
+export class EventListComponent implements OnChanges {
+  @Input() eventList: Event[] | null = [];
 
   @Output()
   private readonly eventSelectedEmitter = new EventEmitter<Event>();
 
-  constructor(
-    private eventsService: EventsService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  isLoading = true;
 
-  ngOnChanges() {
-    console.log('eventList', this.eventList);
-    this.cdr.markForCheck();
-  }
+  constructor() {}
 
-  trackByFn(index: number, event: Event): string | undefined {
-    return event.id;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['eventList'] && changes['eventList'].currentValue) {
+      this.eventList = changes['eventList'].currentValue;
+      this.isLoading = false;
+    }
   }
 
   onEventSelected(event: Event) {

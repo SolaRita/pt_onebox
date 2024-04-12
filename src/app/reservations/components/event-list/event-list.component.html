@@ -1,7 +1,11 @@
+@if (!isLoading) {
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-  <p class="text-black"></p>
-  <ng-container *ngFor="let event of eventList; index as i; trackBy: trackByFn">
-    {{ event.title }}
-    <!-- <app-event-card [event]="event"></app-event-card> -->
-  </ng-container>
+  @for( event of eventList; track event) {
+  <app-event-card [event]="event"></app-event-card>
+  } @empty {
+  <p>No events found</p>
+  }
 </div>
+} @else {
+<p>Cargando datos ...</p>
+}

@@ -1,9 +1,9 @@
-export interface EventInfo {
-  event: Event;
+export interface EventDetail {
+  event: EventInfo;
   sessions: Session[];
 }
 
-export interface Event {
+export interface EventInfo {
   id: string;
   title: string;
   subtitle: string;

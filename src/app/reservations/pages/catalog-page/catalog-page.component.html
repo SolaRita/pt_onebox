@@ -1,8 +1,6 @@
-<div *ngIf="!isLoading">
-  <app-event-list [eventList]="eventList"> </app-event-list>
-  <p *ngIf="eventList.length < 0">No hay eventos disponibles.</p>
-</div>
-<div *ngIf="isLoading">
-  <p>Cargando eventos...</p>
-</div>
-<p>{{ prueba }}</p>
+@if (!isLoading) {
+<app-event-list [eventList]="eventList$ | async"></app-event-list>
+
+} @else {
+<p>Cargando datos ...</p>
+}
