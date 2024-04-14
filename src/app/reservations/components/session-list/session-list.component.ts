@@ -4,10 +4,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { EventDetail, EventInfo } from '../../interfaces/event-detail';
+import { EventDetail } from '../../../cart/interfaces/event-detail';
 
 @Component({
   selector: 'app-session-list',
@@ -16,7 +17,7 @@ import { EventDetail, EventInfo } from '../../interfaces/event-detail';
   styleUrl: './session-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SessionListComponent {
+export class SessionListComponent implements OnChanges {
   @Input()
   eventDetail: EventDetail | null | undefined;
 
@@ -24,8 +25,8 @@ export class SessionListComponent {
   private readonly eventSelectedEmitter = new EventEmitter<Event>();
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['sessionList'] && changes['sessionList'].currentValue) {
-      this.eventDetail = changes['sessionList'].currentValue;
+    if (changes['eventDetail'] && changes['eventDetail'].currentValue) {
+      this.eventDetail = changes['eventDetail'].currentValue;
     }
   }
 

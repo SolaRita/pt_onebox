@@ -13,6 +13,7 @@ import { SessionItemComponent } from './components/session-item/session-item.com
 import { ReservationsRoutingModule } from './reservations-routing.module';
 import { CartModule } from '../cart/cart.module';
 import { HttpClientModule } from '@angular/common/http';
+import { CartService } from '../cart/services/cart.service';
 
 @NgModule({
   declarations: [
@@ -31,5 +32,6 @@ import { HttpClientModule } from '@angular/common/http';
     CartModule,
     HttpClientModule,
   ],
+  providers: [CartService],
 })
 export class ReservationsModule {}

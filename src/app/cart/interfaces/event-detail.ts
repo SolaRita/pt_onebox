@@ -4,7 +4,7 @@ export interface EventDetail {
 }
 
 export interface EventInfo {
-  id: string;
+  id: number;
   title: string;
   subtitle: string;
   image: string;
@@ -13,4 +13,6 @@ export interface EventInfo {
 export interface Session {
   date: number;
   availability: number;
+  selected: number;
 }
+[];

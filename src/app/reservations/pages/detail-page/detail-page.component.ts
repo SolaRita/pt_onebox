@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EventDetail } from '../../interfaces/event-detail';
+import { EventDetail } from '../../../cart/interfaces/event-detail';
 import { Observable } from 'rxjs';
-import { EventsService } from '../../services/events.service';
+import { CartService } from '../../../cart/services/cart.service';
 
 @Component({
   selector: 'app-detail-page',
@@ -15,10 +15,7 @@ export class DetailPageComponent implements OnInit {
   private id!: number;
   isLoading: boolean = true;
   eventDetail$ = new Observable<EventDetail>();
-  constructor(
-    private route: ActivatedRoute,
-    private eventsService: EventsService
-  ) {
+  constructor(private route: ActivatedRoute, private cartService: CartService) {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
@@ -29,7 +26,7 @@ export class DetailPageComponent implements OnInit {
   }
 
   getEventDetail(id: number) {
-    this.eventDetail$ = this.eventsService.getEventDetails(id).pipe();
+    this.eventDetail$ = this.cartService.getEventDetails(id).pipe();
     this.isLoading = false;
   }
 }

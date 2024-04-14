@@ -1,11 +1,22 @@
 <div class="flex items-center justify-between">
   <div class="flex items-center space-x-4">
     <p class="text-base">{{ session.date | date : "dd/MM/yyyy" }}</p>
-    <p class="text-base">Disponibilidad: {{ session.availability }}</p>
+    <p class="text-base">Disponibilidad: {{ totalAvailable }}</p>
   </div>
   <div class="flex items-center space-x-2">
-    <button class="text-blue font-extrabold" (click)="restar()">-</button>
-    <p class="text-base">{{ selected }}</p>
-    <button class="text-blue font-extrabold" (click)="sumar()">+</button>
+    <button
+      [disabled]="totalSelected == 0"
+      class="text-blue font-extrabold text-2xl transition-colors duration-300 hover:text-blueLight"
+      (click)="remove()"
+    >
+      -
+    </button>
+    <p class="text-base">{{ totalSelected }}</p>
+    <button
+      class="text-blue font-extrabold text-2xl transition-colors duration-300 hover:text-blueLight"
+      (click)="add()"
+    >
+      +
+    </button>
   </div>
 </div>
