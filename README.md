@@ -1,27 +1,74 @@
-# PtOneboxRitaSola
+# Onebox Event Reservation Client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+This project is a technical test for ONEBOX conducted by Rita Solà. It is developed using Angular 17 and Tailwind CSS. The application utilizes HTTPClient for API communication, RXJs for reactive programming, and OnPush change detection strategy for performance optimization.
 
-## Development server
+## Project Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The goal of this project is to implement a web client for managing event seat reservations with various sessions and availabilities. The system comprises a main view displaying a list of currently available events (catalog) and a detailed view (event details) containing a list of available sessions for that event and a shopping cart.
 
-## Code scaffolding
+## Development Server
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To run the development server, follow these steps:
 
-## Build
+1. Install Angular CLI globally if not already installed:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+   ```
+   npm install -g @angular/cli
+   ```
 
-## Running unit tests
+2. Clone this repository:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   ```
+   git clone <repository-url>
+   ```
 
-## Running end-to-end tests
+3. Navigate to the project directory:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+   ```
+   cd PtOneboxRitaSola
+   ```
 
-## Further help
+4. Install dependencies:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+   ```
+   npm install
+   ```
+
+5. Start the development server:
+
+   ```
+   ng serve
+   ```
+
+6. Open your browser and navigate to `http://localhost:4200/` to view the application. The application will automatically reload if you make any changes to the source files.
+
+## Angular CLI Commands
+
+You can use the Angular CLI commands to generate various components, directives, pipes, services, classes, guards, interfaces, enums, and modules:
+
+- Component: `ng generate component component-name`
+- Directive: `ng generate directive|pipe|service|class|guard|interface|enum|module`
+
+## Building the Project
+
+To build the project, execute the following command:
+
+```
+ng build
+```
+
+The build artifacts will be stored in the `dist/` directory.
+
+## Further Assistance
+
+For further assistance with the Angular CLI, you can use:
+
+```
+ng help
+```
+
+Or refer to the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+---
+
+This README provides a comprehensive guide for setting up the development environment and running the project. If you encounter any issues or need further assistance, please don't hesitate to reach out.
