@@ -1,8 +1,8 @@
-<div class="flex items-center justify-between">
-  <p class="text-base">Fecha</p>
+<div *ngIf="session.selected" class="flex items-center justify-between">
+  <p class="text-base">{{ session.date | date : "dd/MM/yyyy" }}</p>
   <div class="flex items-center space-x-2">
-    <p class="text-base">x2</p>
-    <button class="" (click)="deleteOne()">
+    <p class="text-base">x{{ totalSelected }}</p>
+    <button class="" (click)="remove()">
       <img src="assets/icons/trash.png" alt="Delete" class="w-6 h-6" />
     </button>
   </div>

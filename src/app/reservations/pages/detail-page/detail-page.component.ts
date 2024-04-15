@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventDetail } from '../../../cart/interfaces/event-detail';
-import { Observable } from 'rxjs';
+import { Observable, finalize, forkJoin, of, take } from 'rxjs';
 import { CartService } from '../../../cart/services/cart.service';
 
 @Component({
@@ -14,7 +14,9 @@ import { CartService } from '../../../cart/services/cart.service';
 export class DetailPageComponent implements OnInit {
   private id!: number;
   isLoading: boolean = true;
-  eventDetail$ = new Observable<EventDetail>();
+  eventDetail$ = new Observable<EventDetail | null>();
+  selectedEvents$ = new Observable<EventDetail[] | null>();
+
   constructor(private route: ActivatedRoute, private cartService: CartService) {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
@@ -23,10 +25,24 @@ export class DetailPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEventDetail(this.id);
+    this.getEventsWithSessions();
   }
 
   getEventDetail(id: number) {
     this.eventDetail$ = this.cartService.getEventDetails(id).pipe();
     this.isLoading = false;
+  }
+
+  getUpdatedEventDetail() {
+    this.cartService.getEventDetailUpdates().subscribe((eventDetail) => {
+      this.eventDetail$ = of(eventDetail);
+    });
+  }
+
+  getEventsWithSessions() {
+    this.cartService.getEventsWithSessions().subscribe((sessions) => {
+      this.selectedEvents$ = of(sessions);
+      this.isLoading = false;
+    });
   }
 }

@@ -21,9 +21,6 @@ import { Event } from '../../interfaces/event';
 export class EventListComponent implements OnChanges {
   @Input() eventList: Event[] | null = [];
 
-  @Output()
-  private readonly eventSelectedEmitter = new EventEmitter<Event>();
-
   isLoading = true;
 
   constructor() {}
@@ -33,9 +30,5 @@ export class EventListComponent implements OnChanges {
       this.eventList = changes['eventList'].currentValue;
       this.isLoading = false;
     }
-  }
-
-  onEventSelected(event: Event) {
-    this.eventSelectedEmitter.emit(event);
   }
 }

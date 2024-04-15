@@ -15,9 +15,10 @@
       class="w-full md:w-1/2 md:mr-4"
     ></app-session-list>
     <app-cart
-      [eventDetail]="eventDetail$ | async"
+      [selectedEvents]="selectedEvents$ | async"
       class="w-full md:w-1/2 md:ml-4"
-    ></app-cart>
+    >
+    </app-cart>
   </div>
   } @else {
   <p>Cargando datos ...</p>

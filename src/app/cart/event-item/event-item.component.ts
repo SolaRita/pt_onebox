@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import { Session } from '../interfaces/event-detail';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-event-item',
@@ -8,8 +16,31 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './event-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventItemComponent {
-  deleteOne() {
-    throw new Error('Method not implemented.');
+export class EventItemComponent implements OnChanges {
+  @Input()
+  session!: Session;
+
+  @Input()
+  eventId!: number;
+
+  constructor(private cartService: CartService) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('eventItem', changes);
+    if (changes['session'] && changes['session'].currentValue) {
+      this.session = changes['session'].currentValue;
+    }
+    if (changes['eventId'] && changes['eventId'].currentValue) {
+      this.eventId = changes['eventId'].currentValue;
+    }
+  }
+  remove() {
+    this.cartService.removeEntry(this.eventId, this.session.date);
+    this.totalSelected;
+  }
+
+  get totalSelected(): number | undefined {
+    console.log('total', this.session.selected);
+    return this.session.selected;
   }
 }

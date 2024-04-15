@@ -11,14 +11,5 @@ import { Event } from '../../interfaces/event';
 })
 export class EventCardComponent {
   @Input()
-  public event: Event = {
-    id: '',
-    title: '',
-    subtitle: '',
-    image: '',
-    place: '',
-    startDate: 0,
-    endDate: 0,
-    description: '',
-  };
+  public event!: Event;
 }

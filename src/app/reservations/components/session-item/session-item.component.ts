@@ -1,4 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Session } from '../../../cart/interfaces/event-detail';
 import { CartService } from '../../../cart/services/cart.service';
 import { Subscription } from 'rxjs';
@@ -7,8 +15,9 @@ import { Subscription } from 'rxjs';
   selector: 'app-session-item',
   templateUrl: './session-item.component.html',
   styleUrls: ['./session-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SessionItemComponent implements OnInit, OnDestroy {
+export class SessionItemComponent implements OnChanges {
   @Input() session: Session = {
     date: 0,
     availability: 0,
@@ -16,35 +25,20 @@ export class SessionItemComponent implements OnInit, OnDestroy {
   };
 
   @Input() eventId!: number;
-  // totalSelected: number = 0;
+
+  @Output()
+  private readonly sessionSelectedEmitter = new EventEmitter<Session>();
+
   entryChangedSubscription: Subscription | undefined;
 
   constructor(private cartService: CartService) {}
 
-  ngOnInit() {
-    this.entryChangedSubscription = this.cartService.entryChanged.subscribe(
-      () => {
-        this.updateSession();
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    if (this.entryChangedSubscription) {
-      this.entryChangedSubscription.unsubscribe();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['session'] && changes['session'].currentValue) {
+      this.session = changes['session'].currentValue;
     }
-  }
-
-  updateSession() {
-    const selectedEvent = this.cartService.getSelectedEvent(this.eventId);
-    if (selectedEvent) {
-      const session = selectedEvent.sessions.find(
-        (s) => s.date === this.session.date
-      );
-      if (session) {
-        this.session.availability = session.availability;
-        this.session.selected = session.selected;
-      }
+    if (changes['eventId'] && changes['eventId'].currentValue) {
+      this.eventId = changes['eventId'].currentValue;
     }
   }
 

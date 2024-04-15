@@ -18,19 +18,14 @@ import { EventDetail } from './interfaces/event-detail';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartComponent implements OnChanges {
-  @Input()
-  eventDetail: EventDetail | null | undefined;
+  @Input() selectedEvents!: EventDetail[] | null;
 
-  @Output()
-  private readonly eventSelectedEmitter = new EventEmitter<Event>();
+  isLoading = true;
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['eventDetail'] && changes['eventDetail'].currentValue) {
-      this.eventDetail = changes['eventDetail'].currentValue;
+    if (changes['selectedEvents'] && changes['selectedEvents'].currentValue) {
+      this.selectedEvents = changes['selectedEvents'].currentValue;
+      this.isLoading = false;
     }
-  }
-
-  onEventSelected(event: Event) {
-    this.eventSelectedEmitter.emit(event);
   }
 }

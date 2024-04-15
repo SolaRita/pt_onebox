@@ -1,6 +1,5 @@
-<div>
-  <ng-container>
-    <app-event-card></app-event-card>
-    <app-event-card></app-event-card>
-  </ng-container>
-</div>
+@for(event of selectedEvents; track event) {
+<app-event-card [eventDetail]="event"></app-event-card>
+} @empty {
+<p>CART IS EMPTY</p>
+}

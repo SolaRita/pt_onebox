@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { EventDetail, Session } from '../interfaces/event-detail';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { RawEventDetailData } from '../interfaces/raw-event-detail-data';
 import { mapToEventDetail } from './mappers/event-detail.mapper';
@@ -10,16 +10,19 @@ import { mapToEventDetail } from './mappers/event-detail.mapper';
 })
 export class CartService {
   private eventInfoUrl = 'assets/db/event-info-';
-  totalAvailability: number = 0;
-  totalSelected: number | undefined = 0;
+
   private selectedEvents: { [eventId: number]: EventDetail } = {};
-  entryChanged = new EventEmitter<void>();
+  private _eventWithSessions: BehaviorSubject<EventDetail[]> =
+    new BehaviorSubject<EventDetail[]>([]);
+  eventsWithSessions: EventDetail[] = [];
+  private _eventDetail: BehaviorSubject<EventDetail | null> =
+    new BehaviorSubject<EventDetail | null>(null);
 
   constructor(private http: HttpClient) {}
 
   getEventDetails(eventId: number): Observable<EventDetail> {
     if (isNaN(eventId) || eventId <= 0) {
-      throw new Error('Invalid eventId');
+      console.log('Invalid eventId');
     }
     return this.http
       .get<RawEventDetailData>(`${this.eventInfoUrl}${eventId}.json`)
@@ -27,49 +30,62 @@ export class CartService {
         map((rawEventDetail) => {
           const eventDetail = mapToEventDetail(rawEventDetail);
           this.selectedEvents[eventId] = eventDetail;
-          console.log('selectedEvents', this.selectedEvents[eventId]);
           return eventDetail;
         })
       );
   }
 
-  calculateTotalSelected(session: Session): void {
-    if (session) {
-      this.totalSelected = session.selected;
-    }
-  }
-
-  calculateSessionAvailability(session: Session): void {
-    if (session) {
-      this.totalAvailability = session.availability;
-    }
-  }
-
   addEntry(eventId: number, sessionDate: number): void {
-    const eventDetail = this.selectedEvents[eventId];
-    if (eventDetail) {
-      const session = eventDetail.sessions.find((s) => s.date === sessionDate);
-      if (session && session.availability > 0) {
-        session.availability--;
-        session.selected++;
-        this.entryChanged.emit();
-      }
-    }
+    this.updateEventDetail(eventId, sessionDate, 'add');
   }
 
   removeEntry(eventId: number, sessionDate: number): void {
-    const eventDetail = this.selectedEvents[eventId];
-    if (eventDetail) {
-      const session = eventDetail.sessions.find((s) => s.date === sessionDate);
-      if (session) {
-        session.availability++;
-        session.selected--;
-        this.entryChanged.emit();
-      }
-    }
+    this.updateEventDetail(eventId, sessionDate, 'remove');
   }
 
-  getSelectedEvent(eventId: number): EventDetail | undefined {
-    return this.selectedEvents[eventId];
+  private updateEventDetail(
+    eventId: number,
+    sessionDate: number,
+    action: 'add' | 'remove'
+  ): void {
+    const eventDetail = this.selectedEvents[eventId];
+    if (!eventDetail) {
+      throw new Error('EventDetail not found');
+    }
+    const sessionIndex = eventDetail.sessions.findIndex(
+      (s) => s.date === sessionDate
+    );
+    if (sessionIndex === -1) {
+      throw new Error('Session not found');
+    }
+    const session = eventDetail.sessions[sessionIndex];
+    if (action === 'add' && session.availability > 0) {
+      session.availability--;
+      session.selected++;
+    } else if (action === 'remove') {
+      session.availability++;
+      session.selected--;
+    }
+    this._eventDetail.next(eventDetail);
+    this.updateEventsWithSessions();
+  }
+
+  private updateEventsWithSessions(): void {
+    const eventsWithSessions = Object.values(this.selectedEvents).filter(
+      (eventDetail) => {
+        return eventDetail.sessions.some(
+          (session) => session.selected && session.selected > 0
+        );
+      }
+    );
+    this._eventWithSessions.next(eventsWithSessions);
+  }
+
+  getEventDetailUpdates(): Observable<EventDetail | null> {
+    return this._eventDetail.asObservable();
+  }
+
+  getEventsWithSessions(): Observable<EventDetail[]> {
+    return this._eventWithSessions.asObservable();
   }
 }
