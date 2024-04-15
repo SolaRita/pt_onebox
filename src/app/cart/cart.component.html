@@ -1,5 +1,5 @@
 @for(event of selectedEvents; track event) {
-<app-event-card [eventDetail]="event"></app-event-card>
+<app-event-card [selectedEvent]="event"></app-event-card>
 } @empty {
 <p>CART IS EMPTY</p>
 }

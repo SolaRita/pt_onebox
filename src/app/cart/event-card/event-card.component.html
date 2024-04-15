@@ -1,9 +1,9 @@
 <div class="mb-4">
-  <h2 class="text-xl mb-2">{{ eventDetail.event.title }}</h2>
-  @for(session of eventDetail.sessions; track session){
+  <h2 class="text-xl mb-2">{{ selectedEvent.event.title }}</h2>
+  @for(session of selectedEvent.sessions; track session){
   <app-event-item
     [session]="session"
-    [eventId]="eventDetail.event.id"
+    [eventId]="selectedEvent.event.id"
   ></app-event-item>
   } @empty {
   <p>Any session selected</p>

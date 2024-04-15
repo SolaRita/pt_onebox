@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EventDetail } from '../../../cart/interfaces/event-detail';
-import { Observable, finalize, forkJoin, of, take } from 'rxjs';
+import { EventDetail, Session } from '../../../cart/interfaces/event-detail';
+import { Observable } from 'rxjs';
 import { CartService } from '../../../cart/services/cart.service';
 
 @Component({
@@ -34,15 +34,11 @@ export class DetailPageComponent implements OnInit {
   }
 
   getUpdatedEventDetail() {
-    this.cartService.getEventDetailUpdates().subscribe((eventDetail) => {
-      this.eventDetail$ = of(eventDetail);
-    });
+    this.eventDetail$ = this.cartService.getEventDetailUpdates();
   }
 
   getEventsWithSessions() {
-    this.cartService.getEventsWithSessions().subscribe((sessions) => {
-      this.selectedEvents$ = of(sessions);
-      this.isLoading = false;
-    });
+    this.selectedEvents$ = this.cartService.getEventsWithSessions();
+    this.isLoading = false;
   }
 }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -16,12 +17,16 @@ import { EventDetail } from '../interfaces/event-detail';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventCardComponent implements OnChanges {
-  @Input()
-  eventDetail!: EventDetail;
+  @Input() selectedEvent!: EventDetail;
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['event'] && changes['event'].currentValue.length > 0) {
-      this.eventDetail = changes['selectedEvents'].currentValue;
+    if (
+      changes['selectedEvent'] &&
+      changes['selectedEvent'].currentValue.length > 0
+    ) {
+      this.selectedEvent = changes['selectedEvents'].currentValue;
     }
   }
 }

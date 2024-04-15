@@ -1,15 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
 } from '@angular/core';
 import { Session } from '../../../cart/interfaces/event-detail';
 import { CartService } from '../../../cart/services/cart.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-session-item',
@@ -25,11 +22,6 @@ export class SessionItemComponent implements OnChanges {
   };
 
   @Input() eventId!: number;
-
-  @Output()
-  private readonly sessionSelectedEmitter = new EventEmitter<Session>();
-
-  entryChangedSubscription: Subscription | undefined;
 
   constructor(private cartService: CartService) {}
 

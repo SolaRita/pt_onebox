@@ -2,10 +2,8 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
 } from '@angular/core';
 import { EventDetail } from './interfaces/event-detail';

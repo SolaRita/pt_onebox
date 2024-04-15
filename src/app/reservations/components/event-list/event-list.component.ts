@@ -1,14 +1,10 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
 } from '@angular/core';
-import { EventsService } from '../../services/events.service';
 import { Event } from '../../interfaces/event';
 
 @Component({

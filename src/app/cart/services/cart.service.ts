@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { EventDetail, Session } from '../interfaces/event-detail';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -22,17 +22,25 @@ export class CartService {
 
   getEventDetails(eventId: number): Observable<EventDetail> {
     if (isNaN(eventId) || eventId <= 0) {
-      console.log('Invalid eventId');
+      throw new Error('Invalid eventId');
     }
     return this.http
       .get<RawEventDetailData>(`${this.eventInfoUrl}${eventId}.json`)
       .pipe(
-        map((rawEventDetail) => {
-          const eventDetail = mapToEventDetail(rawEventDetail);
+        map((response) => {
+          const eventDetail = mapToEventDetail(response);
           this.selectedEvents[eventId] = eventDetail;
-          return eventDetail;
+          return this.sortSessionsByDate(eventDetail);
         })
       );
+  }
+
+  getEventDetailUpdates(): Observable<EventDetail | null> {
+    return this._eventDetail.asObservable();
+  }
+
+  getEventsWithSessions(): Observable<EventDetail[]> {
+    return this._eventWithSessions.asObservable();
   }
 
   addEntry(eventId: number, sessionDate: number): void {
@@ -41,6 +49,13 @@ export class CartService {
 
   removeEntry(eventId: number, sessionDate: number): void {
     this.updateEventDetail(eventId, sessionDate, 'remove');
+  }
+
+  private sortSessionsByDate(eventDetail: EventDetail): EventDetail {
+    if (eventDetail && eventDetail.sessions) {
+      eventDetail.sessions.sort((a, b) => a.date - b.date);
+    }
+    return eventDetail;
   }
 
   private updateEventDetail(
@@ -79,13 +94,5 @@ export class CartService {
       }
     );
     this._eventWithSessions.next(eventsWithSessions);
-  }
-
-  getEventDetailUpdates(): Observable<EventDetail | null> {
-    return this._eventDetail.asObservable();
-  }
-
-  getEventsWithSessions(): Observable<EventDetail[]> {
-    return this._eventWithSessions.asObservable();
   }
 }

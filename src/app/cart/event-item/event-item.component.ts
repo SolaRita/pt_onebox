@@ -26,7 +26,6 @@ export class EventItemComponent implements OnChanges {
   constructor(private cartService: CartService) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('eventItem', changes);
     if (changes['session'] && changes['session'].currentValue) {
       this.session = changes['session'].currentValue;
     }
@@ -40,7 +39,6 @@ export class EventItemComponent implements OnChanges {
   }
 
   get totalSelected(): number | undefined {
-    console.log('total', this.session.selected);
     return this.session.selected;
   }
 }
