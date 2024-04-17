@@ -20,19 +20,32 @@ export class CartService {
 
   constructor(private http: HttpClient) {}
 
-  getEventDetails(eventId: number): Observable<EventDetail> {
+  getEventDetails(eventId: number): Observable<EventDetail | null> {
     if (isNaN(eventId) || eventId <= 0) {
       throw new Error('Invalid eventId');
     }
-    return this.http
-      .get<RawEventDetailData>(`${this.eventInfoUrl}${eventId}.json`)
-      .pipe(
-        map((response) => {
-          const eventDetail = mapToEventDetail(response);
-          this.selectedEvents[eventId] = eventDetail;
-          return this.sortSessionsByDate(eventDetail);
-        })
+
+    const eventHaveChanges = this._eventWithSessions.value.some(
+      (eventDetail) => eventDetail.event.id == eventId
+    );
+    if (eventHaveChanges) {
+      const eventUpdated = this._eventWithSessions.value.find(
+        (eventDetail) => eventDetail.event.id == eventId
       );
+      this._eventDetail.next(eventUpdated!);
+      return this._eventDetail.asObservable();
+    } else {
+      return this.http
+        .get<RawEventDetailData>(`${this.eventInfoUrl}${eventId}.json`)
+        .pipe(
+          map((response) => {
+            const eventDetail = mapToEventDetail(response);
+            this.selectedEvents[eventId] = eventDetail;
+            this._eventDetail.next({ ...eventDetail });
+            return this.sortSessionsByDate(eventDetail);
+          })
+        );
+    }
   }
 
   getEventDetailUpdates(): Observable<EventDetail | null> {
