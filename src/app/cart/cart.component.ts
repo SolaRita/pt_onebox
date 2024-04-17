@@ -16,13 +16,13 @@ import { EventDetail } from './interfaces/event-detail';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartComponent implements OnChanges {
-  @Input() selectedEvents!: EventDetail[] | null;
+  @Input() cartEvents!: EventDetail[] | null;
 
   isLoading = true;
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['selectedEvents'] && changes['selectedEvents'].currentValue) {
-      this.selectedEvents = changes['selectedEvents'].currentValue;
+    if (changes['cartEvents'] && changes['cartEvents'].currentValue) {
+      this.cartEvents = changes['cartEvents'].currentValue;
       this.isLoading = false;
     }
   }

@@ -15,7 +15,7 @@ export class DetailPageComponent implements OnInit {
   private id!: number;
   isLoading: boolean = true;
   eventDetail$ = new Observable<EventDetail | null>();
-  selectedEvents$ = new Observable<EventDetail[] | null>();
+  cartEvents$ = new Observable<EventDetail[] | null>();
 
   constructor(private route: ActivatedRoute, private cartService: CartService) {
     this.route.params.subscribe((params) => {
@@ -31,9 +31,11 @@ export class DetailPageComponent implements OnInit {
   getEventDetail(id: number) {
     this.eventDetail$ = this.cartService.getEventDetails(id).pipe();
     this.isLoading = false;
+    console.log('a1', this.eventDetail$);
   }
 
   getCartEvents() {
-    this.selectedEvents$ = this.cartService.getCartEvents().pipe();
+    this.cartEvents$ = this.cartService.getCartEvents().pipe();
+    console.log('b1', this.cartEvents$);
   }
 }

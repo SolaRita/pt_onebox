@@ -17,16 +17,13 @@ import { EventDetail } from '../interfaces/event-detail';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartCardComponent implements OnChanges {
-  @Input() selectedEvent!: EventDetail;
+  @Input() cartEvent!: EventDetail;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes['selectedEvent'] &&
-      changes['selectedEvent'].currentValue.length > 0
-    ) {
-      this.selectedEvent = changes['selectedEvents'].currentValue;
+    if (changes['cartEvent'] && changes['cartEvent'].currentValue.length > 0) {
+      this.cartEvent = changes['cartEvents'].currentValue;
     }
   }
 }

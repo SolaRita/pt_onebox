@@ -1,5 +1,5 @@
-@for(event of selectedEvents; track event) {
-<app-cart-card [selectedEvent]="event"></app-cart-card>
+@for(event of cartEvents; track event) {
+<app-cart-card [cartEvent]="event"></app-cart-card>
 } @empty {
 <p>CART IS EMPTY</p>
 }
