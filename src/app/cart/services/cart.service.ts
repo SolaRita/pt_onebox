@@ -15,7 +15,6 @@ export class CartService {
   private _cartEvents: BehaviorSubject<EventDetail[]> = new BehaviorSubject<
     EventDetail[]
   >([]);
-  cartEvents: EventDetail[] = [];
   private _eventDetail: BehaviorSubject<EventDetail | null> =
     new BehaviorSubject<EventDetail | null>(null);
 
@@ -97,6 +96,7 @@ export class CartService {
     }
     this._eventDetail.next(eventDetail);
     this.updateCartEvents();
+    this.getEventDetails(eventId);
   }
 
   private updateCartEvents(): void {
