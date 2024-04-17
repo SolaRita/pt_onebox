@@ -34,6 +34,6 @@ export class DetailPageComponent implements OnInit {
   }
 
   getCartEvents() {
-    this.selectedEvents$ = this.cartService.getCartEvents();
+    this.selectedEvents$ = this.cartService.getCartEvents().pipe();
   }
 }

@@ -10,13 +10,13 @@ import {
 import { EventDetail } from '../interfaces/event-detail';
 
 @Component({
-  selector: 'app-event-card',
+  selector: 'app-cart-card',
   standalone: false,
-  templateUrl: './event-card.component.html',
-  styleUrl: './event-card.component.scss',
+  templateUrl: './cart-card.component.html',
+  styleUrl: './cart-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventCardComponent implements OnChanges {
+export class CartCardComponent implements OnChanges {
   @Input() selectedEvent!: EventDetail;
 
   constructor(private cdr: ChangeDetectorRef) {}

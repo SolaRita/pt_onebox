@@ -10,13 +10,13 @@ import { Session } from '../interfaces/event-detail';
 import { CartService } from '../services/cart.service';
 
 @Component({
-  selector: 'app-event-item',
+  selector: 'app-cart-item',
   standalone: false,
-  templateUrl: './event-item.component.html',
-  styleUrl: './event-item.component.scss',
+  templateUrl: './cart-item.component.html',
+  styleUrl: './cart-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventItemComponent implements OnChanges {
+export class CartItemComponent implements OnChanges {
   @Input()
   session!: Session;
 
