@@ -12,9 +12,10 @@ export class CartService {
   private eventInfoUrl = 'assets/db/event-info-';
 
   private selectedEvents: { [eventId: number]: EventDetail } = {};
-  private _eventWithSessions: BehaviorSubject<EventDetail[]> =
-    new BehaviorSubject<EventDetail[]>([]);
-  eventsWithSessions: EventDetail[] = [];
+  private _cartEvents: BehaviorSubject<EventDetail[]> = new BehaviorSubject<
+    EventDetail[]
+  >([]);
+  cartEvents: EventDetail[] = [];
   private _eventDetail: BehaviorSubject<EventDetail | null> =
     new BehaviorSubject<EventDetail | null>(null);
 
@@ -25,11 +26,11 @@ export class CartService {
       throw new Error('Invalid eventId');
     }
 
-    const eventHaveChanges = this._eventWithSessions.value.some(
+    const eventHaveChanges = this._cartEvents.value.some(
       (eventDetail) => eventDetail.event.id == eventId
     );
     if (eventHaveChanges) {
-      const eventUpdated = this._eventWithSessions.value.find(
+      const eventUpdated = this._cartEvents.value.find(
         (eventDetail) => eventDetail.event.id == eventId
       );
       this._eventDetail.next(eventUpdated!);
@@ -52,8 +53,8 @@ export class CartService {
     return this._eventDetail.asObservable();
   }
 
-  getEventsWithSessions(): Observable<EventDetail[]> {
-    return this._eventWithSessions.asObservable();
+  getCartEvents(): Observable<EventDetail[]> {
+    return this._cartEvents.asObservable();
   }
 
   addEntry(eventId: number, sessionDate: number): void {
@@ -95,17 +96,17 @@ export class CartService {
       session.selected--;
     }
     this._eventDetail.next(eventDetail);
-    this.updateEventsWithSessions();
+    this.updateCartEvents();
   }
 
-  private updateEventsWithSessions(): void {
-    const eventsWithSessions = Object.values(this.selectedEvents).filter(
+  private updateCartEvents(): void {
+    const cartEvents = Object.values(this.selectedEvents).filter(
       (eventDetail) => {
         return eventDetail.sessions.some(
           (session) => session.selected && session.selected > 0
         );
       }
     );
-    this._eventWithSessions.next(eventsWithSessions);
+    this._cartEvents.next(cartEvents);
   }
 }

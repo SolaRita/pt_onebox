@@ -25,7 +25,7 @@ export class DetailPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEventDetail(this.id);
-    this.getEventsWithSessions();
+    this.getCartEvents();
   }
 
   getEventDetail(id: number) {
@@ -33,12 +33,7 @@ export class DetailPageComponent implements OnInit {
     this.isLoading = false;
   }
 
-  getUpdatedEventDetail() {
-    this.eventDetail$ = this.cartService.getEventDetailUpdates();
-  }
-
-  getEventsWithSessions() {
-    this.selectedEvents$ = this.cartService.getEventsWithSessions();
-    this.isLoading = false;
+  getCartEvents() {
+    this.selectedEvents$ = this.cartService.getCartEvents();
   }
 }
